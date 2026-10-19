@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Murba Jaya Abadi - Advertising & Outdoor Media Solutions</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="asset/Favicon Murba-01.png">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['-apple-system', 'BlinkMacSystemFont', 'SF Pro Display', 'SF Pro Text', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'sans-serif'],
+                    },
+                    colors: {
+                        apple: {
+                            bg: '#f5f5f7',
+                            dark: '#000000',
+                            cardDark: '#161617',
+                            textDark: '#f5f5f7',
+                            subtextDark: '#86868b',
+                            blue: '#0071e3',
+                            blueHover: '#0077ed',
+                            grayText: '#86868b',
+                            cardLight: '#ffffff',
+                            border: '#d2d2d7'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom Apple Style Scrollbars & Utilities */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Segoe UI", Roboto, sans-serif;
+            letter-spacing: -0.015em;
+            background-color: #000000;
+            color: #f5f5f7;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .glass-nav {
+            background: rgba(0, 0, 0, 0.65);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .text-gradient-silver {
+            background: linear-gradient(180deg, #ffffff 0%, #a1a1a6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .apple-btn-primary {
+            background-color: #0071e3;
+            color: #ffffff;
+            border-radius: 980px;
+            padding: 12px 26px;
+            font-size: 15px;
+            font-weight: 500;
+            transition: all 0.3s cubic-bezier(0, 0, 0.2, 1);
+        }
+
+        .apple-btn-primary:hover {
+            background-color: #0077ed;
+            transform: scale(1.02);
+            box-shadow: 0 10px 25px rgba(0, 113, 227, 0.4);
+        }
+
+        .apple-btn-secondary {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 980px;
+            padding: 12px 26px;
+            font-size: 15px;
+            font-weight: 500;
+            transition: all 0.3s cubic-bezier(0, 0, 0.2, 1);
+        }
+
+        .apple-btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: #ffffff;
+            transform: scale(1.02);
+        }
+
+        /* Hero Background Slider Styles */
+        .hero-slide {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1), transform 8s ease-out;
+            transform: scale(1.08);
+            pointer-events: none;
+        }
+
+        .hero-slide.active {
+            opacity: 1;
+            transform: scale(1);
+            pointer-events: auto;
+        }
+
+        /* Apple Card Hover Zoom Effect */
+        .apple-card {
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .apple-card:hover {
+            transform: scale(1.015);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+
+        /* Modal Overlay Transition */
+        .modal-active {
+            opacity: 1 !important;
+            pointer-events: auto !important;
+        }
+
+        /* Progress Dots Animation */
+        .slide-dot-bar {
+            height: 3px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 999px;
+            overflow: hidden;
+            transition: width 0.3s ease;
+        }
+
+        .slide-dot-bar .progress {
+            height: 100%;
+            width: 0%;
+            background: #ffffff;
+            transition: width 0.1s linear;
+        }
+
+        .active .slide-dot-bar {
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        .scrollbar-none::-webkit-scrollbar {
+            display: none;
+        }
+        .scrollbar-none {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="bg-black text-[#f5f5f7]">
+
+    <!-- Navigation Bar -->
+    <nav class="fixed top-0 left-0 w-full z-50 glass-nav border-b border-white/10 transition-all duration-300">
+        <div class="max-w-[1700px] mx-auto px-6 md:px-12 h-16 flex items-center justify-between text-xs tracking-tight">
+            <!-- Brand Logo -->
+            <a href="#" class="flex items-center space-x-2 font-bold text-lg text-white tracking-wider hover:opacity-80 transition">
+                <span class="bg-gradient-to-r from-blue-500 to-indigo-400 text-transparent bg-clip-text font-black text-2xl">MURBA</span>
+            </a>
+
+            <!-- Desktop Links -->
+            <div class="hidden md:flex items-center space-x-10 text-[#cccccc] font-normal text-sm">
+                <a href="#layanan-utama" class="hover:text-white transition-colors">Layanan Utama</a>
+                <a href="#layanan-lain" class="hover:text-white transition-colors">Layanan Lain</a>
+                <a href="#media" class="hover:text-white transition-colors">Media</a>
+                <a href="#portfolio" class="hover:text-white transition-colors">Portofolio</a>
+                <a href="#keunggulan" class="hover:text-white transition-colors">Mengapa Murba</a>
+                <a href="#tentang" class="hover:text-white transition-colors">Tentang Kami</a>
+            </div>
+
+            <!-- Header Action CTA -->
+            <div class="flex items-center space-x-3">
+                <button onclick="openModal('Konsultasi Project Advertising', 'Siap meningkatkan visibilitas brand Anda? Hubungi tim Murba untuk diskusi titik billboard, produksi signage, branding area, hingga eksekusi event.')" class="apple-btn-primary !py-2 !px-5 text-xs font-semibold">
+                    Hubungi Kami
+                </button>
+                
+                <!-- Mobile Menu Button -->
+                <button id="mobileMenuBtn" class="md:hidden text-white focus:outline-none p-1" aria-label="Toggle Navigation">
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Drawer Menu -->
+        <div id="mobileMenu" class="hidden md:hidden bg-black/95 border-b border-white/10 px-6 py-6 space-y-4 text-sm font-medium">
+            <a href="#layanan-utama" onclick="toggleMobileMenu()" class="block text-gray-300 hover:text-white py-1">Layanan Utama</a>
+            <a href="#layanan-lain" onclick="toggleMobileMenu()" class="block text-gray-300 hover:text-white py-1">Layanan Lain</a>
+            <a href="#media" onclick="toggleMobileMenu()" class="block text-gray-300 hover:text-white py-1">Media</a>
+            <a href="#portfolio" onclick="toggleMobileMenu()" class="block text-gray-300 hover:text-white py-1">Portofolio</a>
+            <a href="#keunggulan" onclick="toggleMobileMenu()" class="block text-gray-300 hover:text-white py-1">Mengapa Murba</a>
+            <a href="#tentang" onclick="toggleMobileMenu()" class="block text-gray-300 hover:text-white py-1">Tentang Kami</a>
+        </div>
+    </nav>
+
+    <!-- FULLSCREEN HERO SECTION WITH BACKGROUND SLIDER -->
+    <section class="relative w-full h-screen min-h-[680px] flex items-center justify-center overflow-hidden bg-black">
+        <div id="heroSliderContainer" class="absolute inset-0 w-full h-full">
+            <div class="hero-slide active">
+                <img id="hero_img_1" src="Image/hero_1.jpg" alt="Konstruksi Billboard & Baliho" class="w-full h-full object-cover">
+            </div>
+            <div class="hero-slide">
+                <img id="hero_img_2" src="Image/hero_2.webp" alt="Produksi Neon Box & Letter Timbul" class="w-full h-full object-cover">
+            </div>
+            <div class="hero-slide">
+                <img id="hero_img_3" src="Image/hero_3.jpg" alt="Branding Area & Shop Sign" class="w-full h-full object-cover">
+            </div>
+            <div class="hero-slide">
+                <img id="hero_img_4" src="Image/hero_4.png" alt="Event Agency & Community Engagement" class="w-full h-full object-cover">
+            </div>
+        </div>
+
+        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/55 to-black/70 z-10"></div>
+        <div class="absolute inset-0 bg-black/30 z-10"></div>
+
+        <div class="relative z-20 max-w-[1700px] w-full mx-auto px-6 md:px-12 pt-20 text-center flex flex-col items-center justify-center">
+            <div class="max-w-5xl space-y-6">
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/15 text-xs md:text-sm font-semibold tracking-wider text-blue-400 uppercase">
+                    <span class="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
+                    MURBA ADVERTISING & CREATIVE AGENCY
+                </div>
+
+                <h1 class="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold tracking-tight text-white leading-[1.08]">
+                    Dampak Visual Maksimal.<br>
+                    <span class="text-gradient-silver">Jangkauan Luas Tanpa Batas.</span>
+                </h1>
+
+                <p class="text-base sm:text-xl md:text-2xl text-gray-300 font-normal max-w-3xl mx-auto leading-relaxed pt-2">
+                    Perusahaan advertising terpercaya dengan titik Baliho & Billboard strategis, manufaktur signage presisi, hingga aktivasi komunitas dan manajemen event terpadu.
+                </p>
+                
+                <div class="pt-6 flex flex-col sm:flex-row items-center justify-center gap-4">
+                    <button onclick="scrollToSection('layanan-utama')" class="apple-btn-primary w-full sm:w-auto px-8 py-3.5 text-base">
+                        Jelajahi Layanan
+                    </button>
+                    <button onclick="openModal('Jadwalkan Konsultasi', 'Konsultasikan kebutuhan kampanye outdoor advertising, branding area, serta event perusahaan Anda bersama tim konsultan Murba.')" class="apple-btn-secondary w-full sm:w-auto px-8 py-3.5 text-base flex items-center justify-center gap-2">
+                        Konsultasi Gratis <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div id="slideCaption" class="mt-8 text-xs sm:text-sm font-medium text-gray-300/80 bg-black/40 backdrop-blur-md px-4 py-1.5 rounded-full border border-white/10 transition-all duration-500">
+                Layanan Utama: Media Baliho & Billboard Strategis
+            </div>
+        </div>
+
+        <div class="absolute bottom-8 left-0 w-full z-30 px-6 md:px-12 flex items-center justify-between max-w-[1700px] left-1/2 -translate-x-1/2">
+            <button onclick="prevSlide()" class="w-11 h-11 rounded-full bg-black/40 hover:bg-white/20 backdrop-blur-md border border-white/20 flex items-center justify-center text-white transition hover:scale-110" aria-label="Slide Sebelumnya">
+                <i data-lucide="chevron-left" class="w-6 h-6"></i>
+            </button>
+
+            <div class="flex items-center space-x-3">
+                <div class="flex space-x-2 items-center" id="dotsContainer">
+                    <button onclick="goToSlide(0)" class="slide-dot-btn p-2 group" aria-label="Slide 1">
+                        <div class="slide-dot-bar w-8 sm:w-12"><div class="progress"></div></div>
+                    </button>
+                    <button onclick="goToSlide(1)" class="slide-dot-btn p-2 group" aria-label="Slide 2">
+                        <div class="slide-dot-bar w-8 sm:w-12"><div class="progress"></div></div>
+                    </button>
+                    <button onclick="goToSlide(2)" class="slide-dot-btn p-2 group" aria-label="Slide 3">
+                        <div class="slide-dot-bar w-8 sm:w-12"><div class="progress"></div></div>
+                    </button>
+                    <button onclick="goToSlide(3)" class="slide-dot-btn p-2 group" aria-label="Slide 4">
+                        <div class="slide-dot-bar w-8 sm:w-12"><div class="progress"></div></div>
+                    </button>
+                </div>
+
+                <button id="playPauseBtn" onclick="toggleAutoplay()" class="w-8 h-8 rounded-full bg-black/40 hover:bg-white/20 backdrop-blur-md border border-white/20 flex items-center justify-center text-white transition ml-2" aria-label="Play or Pause Slider">
+                    <i id="playPauseIcon" data-lucide="pause" class="w-4 h-4"></i>
+                </button>
+            </div>
+
+            <button onclick="nextSlide()" class="w-11 h-11 rounded-full bg-black/40 hover:bg-white/20 backdrop-blur-md border border-white/20 flex items-center justify-center text-white transition hover:scale-110" aria-label="Slide Selanjutnya">
+                <i data-lucide="chevron-right" class="w-6 h-6"></i>
+            </button>
+        </div>
+    </section>
+
+    <!-- LAYANAN UTAMA SECTION -->
+    <section id="layanan-utama" class="py-24 bg-[#f5f5f7] text-black relative z-20">
+        <div class="max-w-[1700px] mx-auto px-6 md:px-12">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <p class="text-xs md:text-sm font-semibold tracking-widest text-blue-600 uppercase">LAYANAN UTAMA</p>
+                <h2 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-black tracking-tight mt-2">Pusat Out-of-Home Advertising.</h2>
+                <p class="text-gray-500 text-lg md:text-xl mt-4">Jangkau jutaan mata setiap hari melalui jaringan Baliho dan Billboard di titik-titik tersibuk perkotaan.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="apple-card bg-white rounded-3xl p-8 md:p-14 flex flex-col justify-between border border-gray-200 shadow-sm min-h-[460px] relative overflow-hidden">
+                    <div class="z-10 max-w-xl">
+                        <div class="w-14 h-14 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center mb-8">
+                            <i data-lucide="layout-grid" class="w-7 h-7"></i>
+                        </div>
+                        <span class="text-xs font-bold text-blue-600 tracking-wider uppercase bg-blue-100 px-3 py-1 rounded-full">Eksklusif & Permanen</span>
+                        <h3 class="text-3xl md:text-4xl font-bold text-black mt-3">Konstruksi & Sewa Billboard</h3>
+                        <p class="text-gray-500 mt-4 text-base md:text-lg leading-relaxed">
+                            Pemasangan iklan skala besar permanen di pusat kota, jalur tol, dan persimpangan protokol. Dilengkapi pencahayaan LED spotlight berdaya tinggi untuk eksposur brand 24/7.
+                        </p>
+                    </div>
+                    <div class="mt-10 z-10 flex items-center space-x-4">
+                        <button onclick="openModal('Sewa & Konstruksi Billboard', 'Layanan Billboard Murba mencakup pemilihan lokasi strategis, pengurusan perizinan & pajak reklame, pencetakan bahan outdoor tahan cuaca, hingga perawatan berkala.')" class="text-blue-600 font-semibold text-base flex items-center gap-1 hover:underline">
+                            Cek Titik Lokasi & Sewa <i data-lucide="chevron-right" class="w-5 h-5"></i>
+                        </button>
+                    </div>
+                    <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=800&auto=format&fit=crop" 
+                         alt="Billboard Permanen" 
+                         class="absolute -bottom-10 -right-10 w-2/3 md:w-1/2 opacity-20 md:opacity-30 rounded-tl-3xl pointer-events-none">
+                </div>
+
+                <div class="apple-card bg-black text-white rounded-3xl p-8 md:p-14 flex flex-col justify-between shadow-lg relative overflow-hidden min-h-[460px]">
+                    <div class="z-10 max-w-xl">
+                        <div class="w-14 h-14 bg-white/10 text-blue-400 rounded-2xl flex items-center justify-center mb-8">
+                            <i data-lucide="image" class="w-7 h-7"></i>
+                        </div>
+                        <span class="text-xs font-bold text-blue-400 tracking-wider uppercase bg-white/10 px-3 py-1 rounded-full">Kampanye Fleksibel</span>
+                        <h3 class="text-3xl md:text-4xl font-bold text-white mt-3">Promosi Baliho Strategis</h3>
+                        <p class="text-gray-400 mt-4 text-base md:text-lg leading-relaxed">
+                            Media promosi baliho temporer dan event berdurasi khusus dengan instalasi cepat, konstruksi kokoh, dan hasil cetak visual resolusi tinggi yang menarik perhatian.
+                        </p>
+                    </div>
+                    <div class="mt-10 z-10">
+                        <button onclick="openModal('Layanan Promosi Baliho', 'Kami melayani produksi Baliho promosi acara, kampanye produk, hingga promosi musiman dengan eksekusi pemasangan presisi dan perizinan resmi.')" class="text-blue-400 font-semibold text-base flex items-center gap-1 hover:underline">
+                            Konsultasi Baliho Kampanye <i data-lucide="chevron-right" class="w-5 h-5"></i>
+                        </button>
+                    </div>
+                    <img src="https://images.unsplash.com/photo-1542744094-3a31b272c490?q=80&w=800&auto=format&fit=crop" 
+                         alt="Baliho Strategis" 
+                         class="absolute -bottom-10 -right-10 w-2/3 md:w-1/2 opacity-20 md:opacity-30 rounded-tl-3xl pointer-events-none">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- LAYANAN LAINNYA SECTION -->
+    <section id="layanan-lain" class="py-24 bg-[#0a0a0c] text-white relative z-20 border-t border-white/10">
+        <div class="max-w-[1700px] mx-auto px-6 md:px-12">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <p class="text-xs md:text-sm font-semibold tracking-widest text-blue-500 uppercase">SOLUSI TERPADU</p>
+                <h2 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight mt-2">Layanan Advertising & Agency.</h2>
+                <p class="text-gray-400 text-lg md:text-xl mt-4">Kelengkapan ekosistem promosi offline, branding toko, manufaktur visual, hingga aktivasi publik.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- 1. Shop Sign -->
+                <div class="apple-card glass-card rounded-3xl p-8 flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 bg-blue-500/20 text-blue-400 rounded-2xl flex items-center justify-center mb-6">
+                            <i data-lucide="store" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white">Produksi Shop Sign</h3>
+                        <p class="text-gray-400 text-sm mt-3 leading-relaxed">
+                            Pembuatan papan fasad toko modern untuk memperkuat identitas brand bisnis retail, kafe, restoran, dan outlet komersial Anda.
+                        </p>
+                    </div>
+                    <button onclick="openModal('Produksi Shop Sign', 'Desain dan manufaktur Shop Sign kustom menggunakan material plat alumunium, acrylic, stainless, dan perpaduan lampu kontras.')" class="mt-8 text-blue-400 font-semibold text-sm flex items-center gap-1 hover:underline">
+                        Detail Shop Sign <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                    </button>
+                </div>
+
+                <!-- 2. Neon Box -->
+                <div class="apple-card glass-card rounded-3xl p-8 flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 bg-indigo-500/20 text-indigo-400 rounded-2xl flex items-center justify-center mb-6">
+                            <i data-lucide="box" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white">Produksi Neon Box</h3>
+                        <p class="text-gray-400 text-sm mt-3 leading-relaxed">
+                            Neon box acrilik dan backlite berkualitas tinggi dengan pencahayaan LED hemat energi yang terang merata dan tahan cuaca ekstrim.
+                        </p>
+                    </div>
+                    <button onclick="openModal('Produksi Neon Box', 'Tersedia neon box 2 sisi, neon box bentuk kustom, hingga neon box framed alumunium dengan modul LED premium.')" class="mt-8 text-indigo-400 font-semibold text-sm flex items-center gap-1 hover:underline">
+                        Detail Neon Box <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                    </button>
+                </div>
+
+                <!-- 3. Letter Timbul -->
+                <div class="apple-card glass-card rounded-3xl p-8 flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 bg-purple-500/20 text-purple-400 rounded-2xl flex items-center justify-center mb-6">
+                            <i data-lucide="type" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white">Letter Timbul (Lighted & Non-Lighted)</h3>
+                        <p class="text-gray-400 text-sm mt-3 leading-relaxed">
+                            Huruf timbul 3D eksklusif berbahankan Stainless Steel, Acrylic, Brass, atau Galvanis. Pilihan dengan modul lampu LED interior (Backlit/Frontlit) maupun tanpa lampu.
+                        </p>
+                    </div>
+                    <button onclick="openModal('Produksi Letter Timbul', 'Pilihan letter timbul menyala (Lighted) dan standar (Non-lighted) untuk signage gedung, resepsionis, dan Fasad Utama.')" class="mt-8 text-purple-400 font-semibold text-sm flex items-center gap-1 hover:underline">
+                        Detail Letter Timbul <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                    </button>
+                </div>
+
+                <!-- 4. Branding Area -->
+                <div class="apple-card glass-card rounded-3xl p-8 flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 bg-emerald-500/20 text-emerald-400 rounded-2xl flex items-center justify-center mb-6">
+                            <i data-lucide="map-pin" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white">Branding Area</h3>
+                        <p class="text-gray-400 text-sm mt-3 leading-relaxed">
+                            Transformasi visual kawasan, pasar, outlet rantai pasok, maupun lingkungan perkotaan secara menyeluruh untuk dominasi keterpaparan brand.
+                        </p>
+                    </div>
+                    <button onclick="openModal('Branding Area', 'Layanan mencakup branding toko kelontong, pengecatan tembok tematik (wall branding), spanduk kawasan, dan pemasangan baliho serentak.')" class="mt-8 text-emerald-400 font-semibold text-sm flex items-center gap-1 hover:underline">
+                        Detail Branding Area <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                    </button>
+                </div>
+
+                <!-- 5. Papan Nama Toko -->
+                <div class="apple-card glass-card rounded-3xl p-8 flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 bg-amber-500/20 text-amber-400 rounded-2xl flex items-center justify-center mb-6">
+                            <i data-lucide="panel-top" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white">Produksi Papan Nama Toko</h3>
+                        <p class="text-gray-400 text-sm mt-3 leading-relaxed">
+                            Papan nama petunjuk usaha kokoh dan tahan lama dari bahan rangka besi galvalum, plat alumunium, dan cetak visual ramah sinar matahari.
+                        </p>
+                    </div>
+                    <button onclick="openModal('Papan Nama Toko', 'Layanan manufaktur dan instalasi papan nama usaha komersial, kantor cabang, serta jaringan franchise.')" class="mt-8 text-amber-400 font-semibold text-sm flex items-center gap-1 hover:underline">
+                        Detail Papan Nama <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                    </button>
+                </div>
+
+                <!-- 6. Digital Printing -->
+                <div class="apple-card glass-card rounded-3xl p-8 flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 bg-rose-500/20 text-rose-400 rounded-2xl flex items-center justify-center mb-6">
+                            <i data-lucide="printer" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white">Digital Printing</h3>
+                        <p class="text-gray-400 text-sm mt-3 leading-relaxed">
+                            Layanan cetak digital format besar (Large Format Printing) untuk spanduk, banner, sticker branding mobil, hingga material promosi pameran.
+                        </p>
+                    </div>
+                    <button onclick="openModal('Digital Printing', 'Mesin print hi-res kapasitas produksi tinggi dengan tinta original tajam dan tahan pudar terhadap cuaca outdoor.')" class="mt-8 text-rose-400 font-semibold text-sm flex items-center gap-1 hover:underline">
+                        Detail Digital Printing <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                    </button>
+                </div>
+
+                <!-- 7. Community Engagement -->
+                <div class="apple-card glass-card rounded-3xl p-8 flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 bg-cyan-500/20 text-cyan-400 rounded-2xl flex items-center justify-center mb-6">
+                            <i data-lucide="users" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white">Community Engagement</h3>
+                        <p class="text-gray-400 text-sm mt-3 leading-relaxed">
+                            Program pendekatan dan aktivasi langsung ke akar rumput komunitas untuk membangun loyalitas pelanggan dan kedekatan emosional brand.
+                        </p>
+                    </div>
+                    <button onclick="openModal('Community Engagement', 'Perancangan program aktivasi komunitas lokal, roadshow interaktif, kompetisi, hingga sponsorship terarah.')" class="mt-8 text-cyan-400 font-semibold text-sm flex items-center gap-1 hover:underline">
+                        Detail Engagement <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                    </button>
+                </div>
+
+                <!-- 8. Gathering, Event & Agency -->
+                <div class="md:col-span-2 apple-card glass-card rounded-3xl p-8 flex flex-col justify-between bg-gradient-to-r from-blue-950/40 to-black">
+                    <div>
+                        <div class="w-12 h-12 bg-blue-500/30 text-blue-300 rounded-2xl flex items-center justify-center mb-6">
+                            <i data-lucide="party-popper" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="text-2xl md:text-3xl font-bold text-white">Gathering, Event & Agency</h3>
+                        <p class="text-gray-300 text-sm md:text-base mt-3 leading-relaxed max-w-2xl">
+                            Penyelenggaraan acara perusahaan, corporate gathering, ekspo, launching produk, hingga manajemen agensi kampanye terpadu dari konsep kreatif hingga produksi panggung akhir.
+                        </p>
+                    </div>
+                    <button onclick="openModal('Gathering, Event & Agency', 'Layanan full event organizer (EO), staging, sound & lighting, produksi booth pameran, talent management, hingga agency penayangan kampanye media.')" class="mt-8 text-blue-400 font-semibold text-sm flex items-center gap-1 hover:underline">
+                        Detail Event & Agency <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MENU MEDIA TITIK IKLAN SECTION -->
+    <section id="media" class="py-24 bg-[#0a0a0c] text-white relative z-20 border-t border-white/10">
+        <div class="max-w-[1700px] mx-auto px-6 md:px-12">
+            <div class="text-center max-w-3xl mx-auto mb-12">
+                <p class="text-xs md:text-sm font-semibold tracking-widest text-blue-500 uppercase">TITIK LOKASI EKSKLUSIF</p>
+                <h2 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight mt-2">Jaringan Media Iklan.</h2>
+                <p class="text-gray-400 text-lg md:text-xl mt-4">Pilih titik Baliho dan Billboard strategis dengan sudut pandang terbaik di kota-kota besar.</p>
+            </div>
+
+            <div class="flex justify-center space-x-2 md:space-x-3 mb-10 overflow-x-auto pb-2 scrollbar-none">
+                <button onclick="filterMedia('all')" id="media-tab-all" class="media-tab-btn active text-xs md:text-sm px-6 py-2.5 rounded-full border border-white/20 bg-white text-black font-semibold transition">Semua</button>
+                <button onclick="filterMedia('baliho')" id="media-tab-baliho" class="media-tab-btn text-xs md:text-sm px-6 py-2.5 rounded-full border border-white/10 bg-white/5 text-gray-400 hover:text-white font-medium transition">Baliho</button>
+                <button onclick="filterMedia('billboard')" id="media-tab-billboard" class="media-tab-btn text-xs md:text-sm px-6 py-2.5 rounded-full border border-white/10 bg-white/5 text-gray-400 hover:text-white font-medium transition">Billboard</button>
+                <button onclick="filterMedia('jakarta')" id="media-tab-jakarta" class="media-tab-btn text-xs md:text-sm px-6 py-2.5 rounded-full border border-white/10 bg-white/5 text-gray-400 hover:text-white font-medium transition">Jakarta</button>
+                <button onclick="filterMedia('semarang')" id="media-tab-semarang" class="media-tab-btn text-xs md:text-sm px-6 py-2.5 rounded-full border border-white/10 bg-white/5 text-gray-400 hover:text-white font-medium transition">Semarang</button>
+                <button onclick="filterMedia('surabaya')" id="media-tab-surabaya" class="media-tab-btn text-xs md:text-sm px-6 py-2.5 rounded-full border border-white/10 bg-white/5 text-gray-400 hover:text-white font-medium transition">Surabaya</button>
+            </div>
+
+            <div id="mediaGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+
+            <div class="mt-16 text-center">
+                <button onclick="openAllMediaModal()" class="apple-btn-primary inline-flex items-center gap-3 text-base px-10 py-4 shadow-xl hover:scale-105 transition">
+                    <i data-lucide="map-pin" class="w-5 h-5"></i> Lihat Semua Titik Media
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- PORTOFOLIO SECTION (REKAM JEJAK) -->
+    <section id="portfolio" class="py-24 bg-black text-white relative z-20">
+        <div class="max-w-[1700px] mx-auto px-6 md:px-12">
+            <div class="text-center max-w-3xl mx-auto mb-12">
+                <p class="text-xs md:text-sm font-semibold tracking-widest text-blue-500 uppercase">PORTOFOLIO PROYEK</p>
+                <h2 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight mt-2">Karya & Rekam Jejak.</h2>
+                <p class="text-gray-400 text-lg md:text-xl mt-4">Bukti eksekusi nyata Murba Advertising di berbagai wilayah dan sektor bisnis.</p>
+            </div>
+
+            <div class="flex justify-center space-x-2 md:space-x-4 mb-12 overflow-x-auto pb-2 scrollbar-none">
+                <button onclick="filterPortfolio('all')" id="tab-all" class="tab-btn active text-xs md:text-sm px-6 py-2.5 rounded-full border border-white/20 bg-white text-black font-semibold transition">Semua</button>
+                <button onclick="filterPortfolio('billboard')" id="tab-billboard" class="tab-btn text-xs md:text-sm px-6 py-2.5 rounded-full border border-white/10 bg-white/5 text-gray-400 hover:text-white font-medium transition">Billboard & Baliho</button>
+                <button onclick="filterPortfolio('signage')" id="tab-signage" class="tab-btn text-xs md:text-sm px-6 py-2.5 rounded-full border border-white/10 bg-white/5 text-gray-400 hover:text-white font-medium transition">Signage & Neon Box</button>
+                <button onclick="filterPortfolio('event')" id="tab-event" class="tab-btn text-xs md:text-sm px-6 py-2.5 rounded-full border border-white/10 bg-white/5 text-gray-400 hover:text-white font-medium transition">Gathering & Event</button>
+            </div>
+
+            <!-- Grid 6 Card Rekam Jejak Utama -->
+            <div id="portfolioGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+
+            <!-- Tombol Lihat Semua Rekam Jejak -->
+            <div class="mt-16 text-center">
+                <button onclick="openAllPortfolioModal()" class="apple-btn-primary inline-flex items-center gap-3 text-base px-10 py-4 shadow-xl hover:scale-105 transition">
+                    <i data-lucide="grid" class="w-5 h-5"></i> Lihat Semua Rekam Jejak
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- MENGAPA MURBA -->
+    <section id="keunggulan" class="py-24 bg-[#161617] text-white relative z-20">
+        <div class="max-w-[1700px] mx-auto px-6 md:px-12">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                <div class="space-y-6">
+                    <p class="text-xs md:text-sm font-semibold tracking-widest text-blue-400 uppercase">STANDAR KUALITAS MURBA</p>
+                    <h2 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight">
+                        Material Unggul.<br>Eksekusi Tanpa Celah.
+                    </h2>
+                    <p class="text-gray-400 text-lg md:text-xl leading-relaxed">
+                        Kami menjamin setiap produk advertising, konstruksi billboard, hingga manajemen event dikerjakan dengan standar keamanan tinggi dan ketepatan waktu penuh.
+                    </p>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 pt-6">
+                        <div class="space-y-2">
+                            <div class="flex items-center space-x-3 text-white font-semibold text-lg">
+                                <i data-lucide="check-circle-2" class="text-blue-500 w-6 h-6"></i>
+                                <span>Workshop & Mesin Sendiri</span>
+                            </div>
+                            <p class="text-sm text-gray-400 leading-relaxed">Pabrikasi signage, mesin digital printing, dan peralatan panggung mandiri tanpa perantara.</p>
+                        </div>
+
+                        <div class="space-y-2">
+                            <div class="flex items-center space-x-3 text-white font-semibold text-lg">
+                                <i data-lucide="shield-check" class="text-blue-500 w-6 h-6"></i>
+                                <span>Perizinan & Legalitas Resmi</span>
+                            </div>
+                            <p class="text-sm text-gray-400 leading-relaxed">Pengurusan izin reklame, pajak daerah, dan jaminan keamanan struktur billboard yang aman.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-6">
+                    <div class="glass-card p-10 rounded-3xl text-center flex flex-col justify-center">
+                        <span class="text-5xl sm:text-7xl font-black text-blue-500">500+</span>
+                        <span class="text-sm sm:text-base text-gray-400 font-medium mt-3">Titik Advertising & Proyek</span>
+                    </div>
+                    <div class="glass-card p-10 rounded-3xl text-center flex flex-col justify-center">
+                        <span class="text-5xl sm:text-7xl font-black text-white">99%</span>
+                        <span class="text-sm sm:text-base text-gray-400 font-medium mt-3">Kepuasan Klien</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CALL TO ACTION SECTION -->
+    <section id="tentang" class="py-28 bg-black text-center relative overflow-hidden z-20">
+        <div class="max-w-5xl mx-auto px-6 md:px-12 relative z-10 space-y-8">
+            <h2 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold text-white tracking-tight leading-tight">
+                Siap Memperkuat Visibilitas Brand Anda?
+            </h2>
+            <p class="text-xl md:text-2xl text-gray-400 max-w-3xl mx-auto">
+                Diskusikan kebutuhan Billboard, Neon Box, Shop Sign, hingga Kampanye Event Anda bersama tim ahli Murba Jaya Abadi.
+            </p>
+            <div class="pt-4 flex flex-col sm:flex-row justify-center gap-4">
+                <button onclick="openModal('Konsultasi Advertising', 'Isi detail promosi Anda atau hubungi kami via WhatsApp untuk respon cepat.')" class="apple-btn-primary px-10 py-4 text-lg">
+                    Hubungi Murba Sekarang
+                </button>
+                <a href="mailto:info@murba.co.id" class="apple-btn-secondary px-10 py-4 text-lg inline-flex items-center justify-center gap-2">
+                    <i data-lucide="mail" class="w-5 h-5"></i> Email Kami
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-[#161617] text-[#86868b] text-xs pt-12 pb-16 border-t border-white/10 relative z-20">
+        <div class="max-w-[1700px] mx-auto px-6 md:px-12 space-y-8">
+            <div class="pb-6 border-b border-white/10 text-[#86868b] leading-relaxed text-sm">
+                * PT Murba Jaya Abadi melayani solusi advertising terlengkap mulai dari titik Billboard, Baliho, manufaktur Signage, Branding Area, hingga eksekusi Event & Agency di seluruh wilayah Indonesia.
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-sm">
+                <div>
+                    <h5 class="text-white font-semibold mb-3">Layanan Utama</h5>
+                    <ul class="space-y-2">
+                        <li><a href="#layanan-utama" class="hover:underline hover:text-white">Konstruksi & Sewa Billboard</a></li>
+                        <li><a href="#layanan-utama" class="hover:underline hover:text-white">Promosi Baliho Strategis</a></li>
+                        <li><a href="#media" class="hover:underline hover:text-white">Jaringan Media Iklan</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="text-white font-semibold mb-3">Produksi & Agency</h5>
+                    <ul class="space-y-2">
+                        <li><a href="#layanan-lain" class="hover:underline hover:text-white">Produksi Shop Sign</a></li>
+                        <li><a href="#layanan-lain" class="hover:underline hover:text-white">Produksi Neon Box</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="text-white font-semibold mb-3">Perusahaan</h5>
+                    <ul class="space-y-2">
+                        <li><a href="#tentang" class="hover:underline hover:text-white">Tentang Murba Jaya Abadi</a></li>
+                        <li><a href="#keunggulan" class="hover:underline hover:text-white">Standar Kualitas & Legalitas</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="text-white font-semibold mb-3">Kontak</h5>
+                    <p class="text-[#86868b]">Semarang / Jakarta / Surabaya</p>
+                    <p class="text-white font-medium mt-1">info@murba.co.id</p>
+                </div>
+            </div>
+
+            <div class="pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4 text-xs">
+                <p>Copyright © 2026 PT Murba Jaya Abadi. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- MODAL HALAMAN BARU: LIHAT SEMUA TITIK MEDIA -->
+    <div id="allMediaModal" class="fixed inset-0 bg-black/95 backdrop-blur-2xl z-[60] opacity-0 pointer-events-none transition-all duration-300 overflow-y-auto">
+        <div class="max-w-[1700px] mx-auto px-6 md:px-12 py-10 min-h-screen flex flex-col justify-between">
+            <div>
+                <div class="flex items-center justify-between pb-8 border-b border-white/10">
+                    <div>
+                        <span class="text-xs font-bold text-blue-500 uppercase tracking-widest">KATALOG LENGKAP MEDIA</span>
+                        <h2 class="text-3xl md:text-5xl font-extrabold text-white mt-1">Semua Titik Iklan Outdoor</h2>
+                    </div>
+                    <button onclick="closeAllMediaModal()" class="bg-white/10 hover:bg-white/20 text-white rounded-full p-3 transition">
+                        <i data-lucide="x" class="w-6 h-6"></i>
+                    </button>
+                </div>
+
+                <div class="flex items-center space-x-2 md:space-x-3 my-8 overflow-x-auto pb-2 scrollbar-none">
+                    <button onclick="filterAllMediaModal('all')" id="full-media-tab-all" class="full-media-tab-btn active text-xs md:text-sm px-6 py-2.5 rounded-full border border-white/20 bg-white text-black font-semibold transition">Semua Titik</button>
+                    <button onclick="filterAllMediaModal('baliho')" id="full-media-tab-baliho" class="full-media-tab-btn text-xs md:text-sm px-6 py-2.5 rounded-full border border-white/10 bg-white/5 text-gray-400 hover:text-white font-medium transition">Baliho</button>
+                    <button onclick="filterAllMediaModal('billboard')" id="full-media-tab-billboard" class="full-media-tab-btn text-xs md:text-sm px-6 py-2.5 rounded-full border border-white/10 bg-white/5 text-gray-400 hover:text-white font-medium transition">Billboard</button>
+                    <button onclick="filterAllMediaModal('jakarta')" id="full-media-tab-jakarta" class="full-media-tab-btn text-xs md:text-sm px-6 py-2.5 rounded-full border border-white/10 bg-white/5 text-gray-400 hover:text-white font-medium transition">Jakarta</button>
+                    <button onclick="filterAllMediaModal('semarang')" id="full-media-tab-semarang" class="full-media-tab-btn text-xs md:text-sm px-6 py-2.5 rounded-full border border-white/10 bg-white/5 text-gray-400 hover:text-white font-medium transition">Semarang</button>
+                    <button onclick="filterAllMediaModal('surabaya')" id="full-media-tab-surabaya" class="full-media-tab-btn text-xs md:text-sm px-6 py-2.5 rounded-full border border-white/10 bg-white/5 text-gray-400 hover:text-white font-medium transition">Surabaya</button>
+                </div>
+
+                <div id="fullMediaGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8"></div>
+            </div>
+
+            <div class="pt-12 text-center border-t border-white/10 mt-12">
+                <button onclick="closeAllMediaModal()" class="apple-btn-secondary px-8 py-3 text-sm">Kembali ke Halaman Utama</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL HALAMAN BARU: LIHAT SEMUA REKAM JEJAK / PORTOFOLIO -->
+    <div id="allPortfolioModal" class="fixed inset-0 bg-black/95 backdrop-blur-2xl z-[60] opacity-0 pointer-events-none transition-all duration-300 overflow-y-auto">
+        <div class="max-w-[1700px] mx-auto px-6 md:px-12 py-10 min-h-screen flex flex-col justify-between">
+            <div>
+                <div class="flex items-center justify-between pb-8 border-b border-white/10">
+                    <div>
+                        <span class="text-xs font-bold text-blue-500 uppercase tracking-widest">GALERI LENGKAP PROYEK</span>
+                        <h2 class="text-3xl md:text-5xl font-extrabold text-white mt-1">Semua Karya & Rekam Jejak</h2>
+                    </div>
+                    <button onclick="closeAllPortfolioModal()" class="bg-white/10 hover:bg-white/20 text-white rounded-full p-3 transition">
+                        <i data-lucide="x" class="w-6 h-6"></i>
+                    </button>
+                </div>
+
+                <div class="flex items-center space-x-2 md:space-x-3 my-8 overflow-x-auto pb-2 scrollbar-none">
+                    <button onclick="filterAllPortfolioModal('all')" id="full-port-tab-all" class="full-port-tab-btn active text-xs md:text-sm px-6 py-2.5 rounded-full border border-white/20 bg-white text-black font-semibold transition">Semua Proyek</button>
+                    <button onclick="filterAllPortfolioModal('billboard')" id="full-port-tab-billboard" class="full-port-tab-btn text-xs md:text-sm px-6 py-2.5 rounded-full border border-white/10 bg-white/5 text-gray-400 hover:text-white font-medium transition">Billboard & Baliho</button>
+                    <button onclick="filterAllPortfolioModal('signage')" id="full-port-tab-signage" class="full-port-tab-btn text-xs md:text-sm px-6 py-2.5 rounded-full border border-white/10 bg-white/5 text-gray-400 hover:text-white font-medium transition">Signage & Neon Box</button>
+                    <button onclick="filterAllPortfolioModal('event')" id="full-port-tab-event" class="full-port-tab-btn text-xs md:text-sm px-6 py-2.5 rounded-full border border-white/10 bg-white/5 text-gray-400 hover:text-white font-medium transition">Gathering & Event</button>
+                </div>
+
+                <div id="fullPortfolioGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8"></div>
+            </div>
+
+            <div class="pt-12 text-center border-t border-white/10 mt-12">
+                <button onclick="closeAllPortfolioModal()" class="apple-btn-secondary px-8 py-3 text-sm">Kembali ke Halaman Utama</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- GENERAL DETAIL MODAL -->
+    <div id="modalOverlay" class="fixed inset-0 bg-black/80 backdrop-blur-md z-[80] opacity-0 pointer-events-none transition-opacity duration-300 flex items-center justify-center p-4">
+        <div class="glass-card bg-[#1c1c1e] text-white rounded-3xl max-w-lg w-full p-8 relative border border-white/20 shadow-2xl transform scale-95 transition-transform duration-300" id="modalBox">
+            <button onclick="closeModal()" class="absolute top-6 right-6 text-gray-400 hover:text-white bg-white/10 rounded-full p-2">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+
+            <span class="text-xs font-semibold uppercase tracking-wider text-blue-400">DETAIL ADVERTISING</span>
+            <h3 id="modalTitle" class="text-2xl font-bold mt-2 text-white">Detail Layanan</h3>
+            <p id="modalDescription" class="text-gray-300 mt-4 text-sm leading-relaxed">
+                Informasi lebih rinci mengenai spesifikasi dan konsultasi proyek pilihan Anda.
+            </p>
+
+            <div class="mt-8 pt-6 border-t border-white/10 flex flex-col gap-3">
+                <a href="https://wa.me/6281234567890" target="_blank" class="apple-btn-primary text-center w-full py-3 flex items-center justify-center gap-2">
+                    <i data-lucide="message-circle" class="w-4 h-4"></i> Hubungi via WhatsApp
+                </a>
+                <button onclick="closeModal()" class="apple-btn-secondary text-center w-full py-2.5">Tutup</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Master Script -->
+    <script>
+        lucide.createIcons();
+
+        // Data Default Titik Media
+        const defaultMediaSpots = [
+            { id: 1, title: "Billboard Komersial Protokol", address: "Jl. Jend. Sudirman, Jakarta Pusat", type: "billboard", city: "jakarta", img: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=800&auto=format&fit=crop", status: "active" },
+            { id: 2, title: "Baliho Strategis Simpang Lima", address: "Kawasan Simpang Lima, Semarang", type: "baliho", city: "semarang", img: "https://images.unsplash.com/photo-1542744094-3a31b272c490?q=80&w=800&auto=format&fit=crop", status: "active" },
+            { id: 3, title: "Billboard Pemuda Central", address: "Jl. Pemuda, Gubeng, Surabaya", type: "billboard", city: "surabaya", img: "https://images.unsplash.com/photo-1508997449629-303059a039c0?q=80&w=800&auto=format&fit=crop", status: "active" },
+            { id: 4, title: "Baliho Event Rasuna Said", address: "Jl. HR Rasuna Said, Jakarta Selatan", type: "baliho", city: "jakarta", img: "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?q=80&w=800&auto=format&fit=crop", status: "rented" },
+            { id: 5, title: "Billboard Exit Tol Krapyak", address: "Gerbang Tol Krapyak, Semarang", type: "billboard", city: "semarang", img: "https://images.unsplash.com/photo-1505373877841-8d25f7d46678?q=80&w=800&auto=format&fit=crop", status: "active" },
+            { id: 6, title: "Baliho Bundaran Satelit", address: "Mayjen Sungkono, Surabaya", type: "baliho", city: "surabaya", img: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=800&auto=format&fit=crop", status: "rented" }
+        ];
+
+        // Data Default 6 Rekam Jejak / Portofolio di Depan
+        const defaultPortfolio = [
+            { id: 1, title: "Billboard Komersial Protokol", category: "billboard", location: "Jalur Utama Pusat Kota", img: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=800&auto=format&fit=crop", status: "active" },
+            { id: 2, title: "Letter Timbul Lighted Fasad", category: "signage", location: "Gedung Perkantoran Modern", img: "https://images.unsplash.com/photo-1542744094-3a31b272c490?q=80&w=800&auto=format&fit=crop", status: "active" },
+            { id: 3, title: "Annual Corporate Gathering", category: "event", location: "Convention Hall & Resort", img: "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?q=80&w=800&auto=format&fit=crop", status: "active" },
+            { id: 4, title: "Branding Outlet & Shop Sign", category: "signage", location: "Jaringan Retail Regional", img: "https://images.unsplash.com/photo-1505373877841-8d25f7d46678?q=80&w=800&auto=format&fit=crop", status: "active" },
+            { id: 5, title: "Kampanye Baliho Strategis", category: "billboard", location: "Persimpangan Wilayah Industri", img: "https://images.unsplash.com/photo-1508997449629-303059a039c0?q=80&w=800&auto=format&fit=crop", status: "active" },
+            { id: 6, title: "Community Engagement Roadshow", category: "event", location: "Aktivasi Lapangan Publik", img: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=800&auto=format&fit=crop", status: "active" }
+        ];
+
+        let mediaSpots = JSON.parse(localStorage.getItem('murba_media_spots')) || defaultMediaSpots;
+        let portfolioItems = JSON.parse(localStorage.getItem('murba_portfolio_items')) || defaultPortfolio;
+
+        /* RENDERING MEDIA */
+        function createMediaCardHTML(item) {
+            const isRented = item.status === 'rented';
+            const isInactive = item.status === 'inactive';
+
+            let badgeStatus = `<span class="bg-black/80 backdrop-blur-md text-xs px-3.5 py-1.5 rounded-full text-white font-medium border border-white/10 uppercase">${item.type}</span>`;
+            if(isRented) badgeStatus += `<span class="bg-red-600/90 backdrop-blur-md text-xs px-3 py-1 rounded-full text-white font-bold ml-2">TERSEWA</span>`;
+
+            return `
+                <div class="media-card-item ${item.type} ${item.city} apple-card glass-card rounded-3xl overflow-hidden group cursor-pointer ${isInactive ? 'opacity-40 grayscale pointer-events-none' : ''}" 
+                     onclick="openModal('${item.title} - ${item.city.toUpperCase()}', 'Lokasi Titik: ${item.address}. Status: ${isRented ? 'Sudah Disewa' : 'Tersedia untuk Sewa'}. Hubungi tim Murba untuk jadwal tayang.')">
+                    <div class="h-72 overflow-hidden relative">
+                        <img src="${item.img}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" alt="${item.title}">
+                        <div class="absolute top-4 left-4 flex items-center">${badgeStatus}</div>
+                    </div>
+                    <div class="p-8">
+                        <h4 class="text-2xl font-bold text-white tracking-tight">${item.title}</h4>
+                        <p class="text-base text-gray-400 mt-2 font-normal">${item.address}</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderMediaGrids() {
+            const mediaGrid = document.getElementById('mediaGrid');
+            const fullMediaGrid = document.getElementById('fullMediaGrid');
+            if (mediaGrid) mediaGrid.innerHTML = mediaSpots.slice(0, 6).map(item => createMediaCardHTML(item)).join('');
+            if (fullMediaGrid) fullMediaGrid.innerHTML = mediaSpots.map(item => createMediaCardHTML(item)).join('');
+            lucide.createIcons();
+        }
+
+        function filterMedia(category) {
+            const tabs = document.querySelectorAll('.media-tab-btn');
+            tabs.forEach(tab => tab.classList.replace('bg-white', 'bg-white/5') || tab.classList.replace('text-black', 'text-gray-400'));
+            const activeTab = document.getElementById(`media-tab-${category}`);
+            if (activeTab) activeTab.classList.replace('bg-white/5', 'bg-white') && activeTab.classList.replace('text-gray-400', 'text-black');
+
+            const filtered = category === 'all' ? mediaSpots : mediaSpots.filter(item => item.type === category || item.city === category);
+            document.getElementById('mediaGrid').innerHTML = filtered.map(item => createMediaCardHTML(item)).join('');
+        }
+
+        function filterAllMediaModal(category) {
+            const tabs = document.querySelectorAll('.full-media-tab-btn');
+            tabs.forEach(tab => tab.classList.replace('bg-white', 'bg-white/5') || tab.classList.replace('text-black', 'text-gray-400'));
+            const activeTab = document.getElementById(`full-media-tab-${category}`);
+            if (activeTab) activeTab.classList.replace('bg-white/5', 'bg-white') && activeTab.classList.replace('text-gray-400', 'text-black');
+
+            const filtered = category === 'all' ? mediaSpots : mediaSpots.filter(item => item.type === category || item.city === category);
+            document.getElementById('fullMediaGrid').innerHTML = filtered.map(item => createMediaCardHTML(item)).join('');
+        }
+
+        function openAllMediaModal() {
+            document.getElementById('allMediaModal').classList.add('modal-active');
+            document.body.style.overflow = 'hidden';
+            filterAllMediaModal('all');
+        }
+
+        function closeAllMediaModal() {
+            document.getElementById('allMediaModal').classList.remove('modal-active');
+            document.body.style.overflow = 'auto';
+        }
+
+        /* RENDERING PORTOFOLIO / REKAM JEJAK */
+        function createPortfolioCardHTML(item) {
+            const isInactive = item.status === 'inactive';
+
+            return `
+                <div class="portfolio-card-item ${item.category} apple-card glass-card rounded-3xl overflow-hidden group cursor-pointer ${isInactive ? 'opacity-40 grayscale pointer-events-none' : ''}"
+                     onclick="openModal('${item.title}', 'Lokasi Proyek: ${item.location}. Kategori: ${item.category.toUpperCase()}. Diproduksi oleh tim ahli Murba Advertising.')">
+                    <div class="h-72 overflow-hidden relative">
+                        <img src="${item.img}" class="w-full h-full object-cover group-hover:scale-110 transition duration-500" alt="${item.title}">
+                        <span class="absolute top-4 left-4 bg-black/60 backdrop-blur-md text-xs px-3 py-1.5 rounded-full text-white border border-white/10 uppercase font-semibold">${item.category}</span>
+                    </div>
+                    <div class="p-8">
+                        <h4 class="text-xl font-bold text-white">${item.title}</h4>
+                        <p class="text-sm text-gray-400 mt-2">${item.location}</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderPortfolioGrids() {
+            const activeItems = portfolioItems.filter(item => item.status !== 'inactive');
+            const pGrid = document.getElementById('portfolioGrid');
+            const fullPGrid = document.getElementById('fullPortfolioGrid');
+
+            // Halaman depan menampilkan setidaknya 6 card (atau semua jika kurang)
+            if (pGrid) pGrid.innerHTML = activeItems.slice(0, 6).map(item => createPortfolioCardHTML(item)).join('');
+            if (fullPGrid) fullPGrid.innerHTML = activeItems.map(item => createPortfolioCardHTML(item)).join('');
+            lucide.createIcons();
+        }
+
+        function filterPortfolio(category) {
+            const activeItems = portfolioItems.filter(item => item.status !== 'inactive');
+            const tabs = document.querySelectorAll('.tab-btn');
+            tabs.forEach(tab => tab.classList.replace('bg-white', 'bg-white/5') || tab.classList.replace('text-black', 'text-gray-400'));
+            const activeTab = document.getElementById(`tab-${category}`);
+            if (activeTab) activeTab.classList.replace('bg-white/5', 'bg-white') && activeTab.classList.replace('text-gray-400', 'text-black');
+
+            const filtered = category === 'all' ? activeItems : activeItems.filter(item => item.category === category);
+            document.getElementById('portfolioGrid').innerHTML = filtered.slice(0, 6).map(item => createPortfolioCardHTML(item)).join('');
+        }
+
+        function filterAllPortfolioModal(category) {
+            const activeItems = portfolioItems.filter(item => item.status !== 'inactive');
+            const tabs = document.querySelectorAll('.full-port-tab-btn');
+            tabs.forEach(tab => tab.classList.replace('bg-white', 'bg-white/5') || tab.classList.replace('text-black', 'text-gray-400'));
+            const activeTab = document.getElementById(`full-port-tab-${category}`);
+            if (activeTab) activeTab.classList.replace('bg-white/5', 'bg-white') && activeTab.classList.replace('text-gray-400', 'text-black');
+
+            const filtered = category === 'all' ? activeItems : activeItems.filter(item => item.category === category);
+            document.getElementById('fullPortfolioGrid').innerHTML = filtered.map(item => createPortfolioCardHTML(item)).join('');
+        }
+
+        function openAllPortfolioModal() {
+            document.getElementById('allPortfolioModal').classList.add('modal-active');
+            document.body.style.overflow = 'hidden';
+            filterAllPortfolioModal('all');
+        }
+
+        function closeAllPortfolioModal() {
+            document.getElementById('allPortfolioModal').classList.remove('modal-active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Hero Slider
+        const slides = document.querySelectorAll('.hero-slide');
+        const dots = document.querySelectorAll('.slide-dot-btn');
+        const slideCaption = document.getElementById('slideCaption');
+        const playPauseIcon = document.getElementById('playPauseIcon');
+        const captions = ["1 / 4 — Layanan Utama: Media Baliho & Billboard Strategis", "2 / 4 — Manufaktur Signage: Produksi Neon Box & Letter Timbul", "3 / 4 — Branding Fasad: Shop Sign & Papan Nama Toko", "4 / 4 — Event & Community: Gathering, Event Agency & Engagement"];
+        let currentSlide = 0, isPlaying = true, progressInterval, progressWidth = 0;
+
+        function updateSliderUI() {
+            slides.forEach((slide, index) => slide.classList.toggle('active', index === currentSlide));
+            if (slideCaption) slideCaption.innerText = captions[currentSlide];
+            dots.forEach((dot, index) => {
+                const bar = dot.querySelector('.progress');
+                dot.classList.toggle('active', index === currentSlide);
+                if (bar && index !== currentSlide) bar.style.width = index < currentSlide ? '100%' : '0%';
+            });
+            progressWidth = 0;
+        }
+
+        function startProgressTimer() {
+            clearInterval(progressInterval);
+            if (!isPlaying) return;
+            progressInterval = setInterval(() => {
+                progressWidth += (50 / 5000) * 100;
+                const currentDot = dots[currentSlide];
+                if (currentDot && currentDot.querySelector('.progress')) currentDot.querySelector('.progress').style.width = Math.min(progressWidth, 100) + '%';
+                if (progressWidth >= 100) nextSlide();
+            }, 50);
+        }
+
+        function nextSlide() { currentSlide = (currentSlide + 1) % slides.length; updateSliderUI(); startProgressTimer(); }
+        function prevSlide() { currentSlide = (currentSlide - 1 + slides.length) % slides.length; updateSliderUI(); startProgressTimer(); }
+        function goToSlide(i) { currentSlide = i; updateSliderUI(); startProgressTimer(); }
+        function toggleAutoplay() { isPlaying = !isPlaying; if (playPauseIcon) playPauseIcon.setAttribute('data-lucide', isPlaying ? 'pause' : 'play'); lucide.createIcons(); if (isPlaying) startProgressTimer(); else clearInterval(progressInterval); }
+
+        updateSliderUI();
+        startProgressTimer();
+
+        // General UI Logic
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn'), mobileMenu = document.getElementById('mobileMenu');
+        mobileMenuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+        function toggleMobileMenu() { mobileMenu.classList.add('hidden'); }
+        function scrollToSection(id) { document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' }); }
+
+        const modalOverlay = document.getElementById('modalOverlay'), modalTitle = document.getElementById('modalTitle'), modalDescription = document.getElementById('modalDescription');
+        function openModal(t, d) { modalTitle.innerText = t; modalDescription.innerText = d; modalOverlay.classList.add('modal-active'); document.body.style.overflow = 'hidden'; }
+        function closeModal() { modalOverlay.classList.remove('modal-active'); document.body.style.overflow = 'auto'; }
+        modalOverlay.addEventListener('click', (e) => { if (e.target === modalOverlay) closeModal(); });
+
+        // Initial Grid Renders
+        renderMediaGrids();
+        renderPortfolioGrids();
+    </script>
+</body>
+</html>

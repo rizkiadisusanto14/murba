@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Control Panel Website - Murba Jaya Abadi</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="bg-black text-[#f5f5f7] min-h-screen font-sans flex flex-col justify-between">
+
+    <!-- Admin Header Bar -->
+    <header class="bg-[#161618] border-b border-white/10 px-6 py-4 flex items-center justify-between">
+        <div class="flex items-center space-x-3">
+            <span class="bg-blue-600 text-white font-black px-3 py-1 rounded-lg text-lg">MURBA</span>
+            <span class="text-xs text-gray-400 uppercase font-semibold tracking-wider">Control Panel Administrator</span>
+        </div>
+        <a href="index.html" target="_blank" class="text-xs text-blue-400 hover:underline flex items-center gap-1">
+            <i data-lucide="external-link" class="w-4 h-4"></i> Lihat Website Utama
+        </a>
+    </header>
+
+    <!-- Main Admin Container -->
+    <main class="max-w-5xl mx-auto px-6 py-10 w-full flex-1">
+        <div class="bg-[#161618] border border-white/15 rounded-3xl p-8 space-y-8 shadow-2xl">
+            <div>
+                <h1 class="text-3xl font-extrabold text-white">Dashboard Pengaturan Website</h1>
+                <p class="text-gray-400 text-sm mt-1">Kelola status titik media, lokasi kota, alamat, serta gambar layanan dan portofolio secara terpadu.</p>
+            </div>
+
+            <!-- Tabs Navigation -->
+            <div class="flex border-b border-white/10 space-x-6 text-sm font-semibold overflow-x-auto">
+                <button onclick="switchTab('media')" id="tabNavMedia" class="pb-3 border-b-2 border-blue-500 text-white whitespace-nowrap">Kelola Titik Media</button>
+                <button onclick="switchTab('images')" id="tabNavImages" class="pb-3 border-b-2 border-transparent text-gray-400 hover:text-white whitespace-nowrap">Gambar Hero & Layanan Utama</button>
+                <button onclick="switchTab('portfolio')" id="tabNavPortfolio" class="pb-3 border-b-2 border-transparent text-gray-400 hover:text-white whitespace-nowrap">Kelola Portofolio (Rekam Jejak)</button>
+            </div>
+
+            <!-- Tab 1: Media Spots -->
+            <div id="tabMedia" class="space-y-6">
+                <div class="bg-white/5 rounded-2xl p-6 border border-white/10">
+                    <h3 class="text-base font-bold text-white mb-4 flex items-center gap-2">
+                        <i data-lucide="plus-circle" class="text-blue-500 w-5 h-5"></i> Tambah Titik Media Baru
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                        <input type="text" id="newMediaTitle" placeholder="Nama Jenis (Misal: Billboard Sudirman)" class="bg-black/60 border border-white/20 rounded-xl p-3 text-white focus:outline-none focus:border-blue-500">
+                        
+                        <!-- Searchable Dropdown Kota -->
+                        <div class="relative">
+                            <input type="text" id="newMediaCitySearch" oninput="filterCities()" placeholder="Ketik untuk Cari Kota di Indonesia..." class="w-full bg-black/60 border border-white/20 rounded-xl p-3 text-white focus:outline-none focus:border-blue-500">
+                            <div id="cityDropdown" class="hidden absolute left-0 right-0 top-full mt-1 bg-[#1c1c1e] border border-white/20 rounded-xl max-h-48 overflow-y-auto z-50 text-white shadow-xl"></div>
+                            <input type="hidden" id="newMediaCity">
+                        </div>
+
+                        <!-- Input Alamat Teks Biasa -->
+                        <input type="text" id="newMediaAddress" placeholder="Alamat Lengkap Titik (Misal: Jl. Jend. Sudirman No. 45)" class="md:col-span-2 bg-black/60 border border-white/20 rounded-xl p-3 text-white focus:outline-none focus:border-blue-500">
+
+                        <select id="newMediaType" class="bg-black/60 border border-white/20 rounded-xl p-3 text-white focus:outline-none focus:border-blue-500">
+                            <option value="billboard">Billboard</option>
+                            <option value="baliho">Baliho</option>
+                        </select>
+                        
+                        <input type="text" id="newMediaImg" placeholder="URL Gambar Titik (misal: Image/hero_1.jpg)" class="bg-black/60 border border-white/20 rounded-xl p-3 text-white focus:outline-none focus:border-blue-500">
+                    </div>
+                    <button onclick="addNewMediaSpot()" class="bg-blue-600 hover:bg-blue-500 text-white font-medium w-full mt-4 text-xs py-3 rounded-xl transition">+ Simpan & Tampilkan di Website</button>
+                </div>
+
+                <div>
+                    <h3 class="text-base font-bold text-white mb-4">Daftar Status Titik Media Aktif</h3>
+                    <div id="adminMediaList" class="space-y-3"></div>
+                </div>
+            </div>
+
+            <!-- Tab 2: Gambar Hero & Layanan Utama -->
+            <div id="tabImages" class="hidden space-y-6">
+                <!-- Hero Slider -->
+                <div class="bg-white/5 rounded-2xl p-6 border border-white/10 space-y-4">
+                    <h3 class="text-base font-bold text-white mb-2 flex items-center gap-2">
+                        <i data-lucide="sliders" class="text-blue-400 w-5 h-5"></i> Gambar Hero Slider Utama
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                        <div>
+                            <label class="text-gray-400 mb-1 block">Slide 1 (Billboard & Baliho)</label>
+                            <input type="text" id="inputHero1" value="Image/hero_1.jpg" class="w-full bg-black/60 border border-white/20 rounded-xl p-3 text-white">
+                        </div>
+                        <div>
+                            <label class="text-gray-400 mb-1 block">Slide 2 (Neon Box)</label>
+                            <input type="text" id="inputHero2" value="Image/hero_2.webp" class="w-full bg-black/60 border border-white/20 rounded-xl p-3 text-white">
+                        </div>
+                        <div>
+                            <label class="text-gray-400 mb-1 block">Slide 3 (Branding Area)</label>
+                            <input type="text" id="inputHero3" value="Image/hero_3.jpg" class="w-full bg-black/60 border border-white/20 rounded-xl p-3 text-white">
+                        </div>
+                        <div>
+                            <label class="text-gray-400 mb-1 block">Slide 4 (Event)</label>
+                            <input type="text" id="inputHero4" value="Image/hero_4.png" class="w-full bg-black/60 border border-white/20 rounded-xl p-3 text-white">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Layanan Utama -->
+                <div class="bg-white/5 rounded-2xl p-6 border border-white/10 space-y-4">
+                    <h3 class="text-base font-bold text-white mb-2 flex items-center gap-2">
+                        <i data-lucide="layout" class="text-blue-400 w-5 h-5"></i> Gambar Background Layanan Utama
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                        <div>
+                            <label class="text-gray-400 mb-1 block">Gambar Card Billboard</label>
+                            <input type="text" id="inputLayananBillboard" class="w-full bg-black/60 border border-white/20 rounded-xl p-3 text-white">
+                        </div>
+                        <div>
+                            <label class="text-gray-400 mb-1 block">Gambar Card Baliho</label>
+                            <input type="text" id="inputLayananBaliho" class="w-full bg-black/60 border border-white/20 rounded-xl p-3 text-white">
+                        </div>
+                    </div>
+                </div>
+                <button onclick="saveWebsiteImages()" class="bg-blue-600 hover:bg-blue-500 text-white font-medium w-full text-xs py-3 rounded-xl transition">Simpan Perubahan Gambar</button>
+            </div>
+
+            <!-- Tab 3: Gambar Portofolio / Rekam Jejak -->
+            <div id="tabPortfolio" class="hidden space-y-6">
+                <!-- Form Tambah Portofolio Baru -->
+                <div class="bg-white/5 rounded-2xl p-6 border border-white/10">
+                    <h3 class="text-base font-bold text-white mb-4 flex items-center gap-2">
+                        <i data-lucide="plus-circle" class="text-blue-500 w-5 h-5"></i> Tambah Rekam Jejak / Portofolio Baru
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                        <input type="text" id="newPortTitle" placeholder="Judul Proyek (Misal: Billboard Komersial Protokol)" class="bg-black/60 border border-white/20 rounded-xl p-3 text-white focus:outline-none focus:border-blue-500">
+                        <input type="text" id="newPortLocation" placeholder="Lokasi (Misal: Jalur Utama Pusat Kota)" class="bg-black/60 border border-white/20 rounded-xl p-3 text-white focus:outline-none focus:border-blue-500">
+                        <select id="newPortCategory" class="bg-black/60 border border-white/20 rounded-xl p-3 text-white focus:outline-none focus:border-blue-500">
+                            <option value="billboard">Billboard & Baliho</option>
+                            <option value="signage">Signage & Neon Box</option>
+                            <option value="event">Gathering & Event</option>
+                        </select>
+                        <input type="text" id="newPortImg" placeholder="URL Gambar Proyek (misal: Image/hero_1.jpg)" class="bg-black/60 border border-white/20 rounded-xl p-3 text-white focus:outline-none focus:border-blue-500">
+                    </div>
+                    <button onclick="addNewPortfolioItem()" class="bg-blue-600 hover:bg-blue-500 text-white font-medium w-full mt-4 text-xs py-3 rounded-xl transition">+ Tambah Portofolio ke Website</button>
+                </div>
+
+                <!-- Daftar Kelola Portofolio -->
+                <div class="bg-white/5 rounded-2xl p-6 border border-white/10 space-y-4">
+                    <h3 class="text-base font-bold text-white mb-2 flex items-center gap-2">
+                        <i data-lucide="image" class="text-blue-400 w-5 h-5"></i> Daftar & Status Rekam Jejak
+                    </h3>
+                    <div id="portfolioInputsList" class="space-y-4 text-xs"></div>
+                    <button onclick="savePortfolioImages()" class="bg-blue-600 hover:bg-blue-500 text-white font-medium w-full text-xs py-3 rounded-xl transition">Simpan Perubahan Portofolio</button>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="bg-[#161618] border-t border-white/10 px-6 py-4 text-center text-xs text-gray-500">
+        Copyright © 2026 PT Murba Jaya Abadi - Admin Control Panel.
+    </footer>
+
+    <script>
+        lucide.createIcons();
+
+        /* ========================================================
+           DAFTAR KOTA & KABUPATEN DI INDONESIA
+        ======================================================== */
+        const indonesianCities = [
+            "Banda Aceh", "Langsa", "Lhokseumawe", "Sabang", "Subulussalam",
+            "Medan", "Binjai", "Gunungsitoli", "Padangsidimpuan", "Pematangsiantar", "Sibolga", "Tanjungbalai", "Tebing Tinggi",
+            "Padang", "Bukittinggi", "Padang Panjang", "Pariaman", "Payakumbuh", "Sawahlunto", "Solok",
+            "Pekanbaru", "Dumai", "Jambi", "Sungaipenuh",
+            "Palembang", "Lubuklinggau", "Pagar Alam", "Prabumulih",
+            "Bengkulu", "Bandar Lampung", "Metro",
+            "Pangkalpinang", "Batam", "Tanjungpinang",
+            "Jakarta Pusat", "Jakarta Barat", "Jakarta Selatan", "Jakarta Timur", "Jakarta Utara",
+            "Bandung", "Bekasi", "Bogor", "Cimahi", "Cirebon", "Depok", "Sukabumi", "Tasikmalaya", "Banjar",
+            "Semarang", "Magelang", "Pekalongan", "Salatiga", "Surakarta", "Tegal",
+            "Yogyakarta", "Surabaya", "Batu", "Blitar", "Kediri", "Madiun", "Malang", "Mojokerto", "Pasuruan", "Probolinggo",
+            "Tangerang", "Tangerang Selatan", "Cilegon", "Serang",
+            "Denpasar", "Mataram", "Bima", "Kupang",
+            "Pontianak", "Singkawang", "Banjarbaru", "Banjarmasin", "Palangkaraya", "Balikpapan", "Bontang", "Samarinda", "Nusantara (IKN)", "Tarakan",
+            "Gorontalo", "Makassar", "Palopo", "Parepare", "Palu", "Bau-Bau", "Kendari", "Bitung", "Kotamobagu", "Manado", "Tomohon", "Mamuju",
+            "Ambon", "Tual", "Ternate", "Tidore Kepulauan",
+            "Jayapura", "Sorong", "Manokwari", "Merauke", "Nabire"
+        ];
+
+        /* ========================================================
+           SEARCHABLE DROPDOWN KOTA
+        ======================================================== */
+        function filterCities() {
+            const input = document.getElementById('newMediaCitySearch').value.toLowerCase();
+            const dropdown = document.getElementById('cityDropdown');
+            dropdown.innerHTML = '';
+
+            if (!input) {
+                dropdown.classList.add('hidden');
+                return;
+            }
+
+            const matches = indonesianCities.filter(c => c.toLowerCase().includes(input));
+            if (matches.length > 0) {
+                dropdown.classList.remove('hidden');
+                matches.forEach(city => {
+                    const item = document.createElement('div');
+                    item.className = 'p-3 hover:bg-blue-600 hover:text-white cursor-pointer transition text-xs border-b border-white/5';
+                    item.innerText = city;
+                    item.onclick = function() {
+                        document.getElementById('newMediaCitySearch').value = city;
+                        document.getElementById('newMediaCity').value = city.toLowerCase().replace(/\s+/g, '');
+                        dropdown.classList.add('hidden');
+                    };
+                    dropdown.appendChild(item);
+                });
+            } else {
+                dropdown.classList.add('hidden');
+            }
+        }
+
+        /* ========================================================
+           DATA SINKRONISASI STORAGE
+        ======================================================== */
+        const defaultMediaSpots = [
+            { id: 1, title: "Billboard Komersial Protokol", address: "Jl. Jend. Sudirman, Jakarta Pusat", type: "billboard", city: "jakarta", img: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=800&auto=format&fit=crop", status: "active" },
+            { id: 2, title: "Baliho Strategis Simpang Lima", address: "Kawasan Simpang Lima, Semarang", type: "baliho", city: "semarang", img: "https://images.unsplash.com/photo-1542744094-3a31b272c490?q=80&w=800&auto=format&fit=crop", status: "active" },
+            { id: 3, title: "Billboard Pemuda Central", address: "Jl. Pemuda, Gubeng, Surabaya", type: "billboard", city: "surabaya", img: "https://images.unsplash.com/photo-1508997449629-303059a039c0?q=80&w=800&auto=format&fit=crop", status: "active" }
+        ];
+
+        const defaultPortfolio = [
+            { id: 1, title: "Billboard Komersial Protokol", category: "billboard", location: "Jalur Utama Pusat Kota", img: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=800&auto=format&fit=crop", status: "active" },
+            { id: 2, title: "Letter Timbul Lighted Fasad", category: "signage", location: "Gedung Perkantoran Modern", img: "https://images.unsplash.com/photo-1542744094-3a31b272c490?q=80&w=800&auto=format&fit=crop", status: "active" },
+            { id: 3, title: "Annual Corporate Gathering", category: "event", location: "Convention Hall & Resort", img: "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?q=80&w=800&auto=format&fit=crop", status: "active" }
+        ];
+
+        let mediaSpots = JSON.parse(localStorage.getItem('murba_media_spots')) || defaultMediaSpots;
+        let portfolioItems = JSON.parse(localStorage.getItem('murba_portfolio_items')) || defaultPortfolio;
+
+        function saveToStorage() {
+            localStorage.setItem('murba_media_spots', JSON.stringify(mediaSpots));
+            localStorage.setItem('murba_portfolio_items', JSON.stringify(portfolioItems));
+        }
+
+        /* ========================================================
+           ADMIN RENDER & EVENT HANDLERS
+        ======================================================== */
+        function renderAdminList() {
+            // Render Titik Media
+            const list = document.getElementById('adminMediaList');
+            list.innerHTML = mediaSpots.map(item => `
+                <div class="flex items-center justify-between p-4 bg-black/40 rounded-2xl border border-white/10 text-xs">
+                    <div>
+                        <span class="font-bold text-white block text-sm">${item.title}</span>
+                        <span class="text-gray-400 text-xs">${item.address} (${item.city.toUpperCase()})</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <select onchange="updateStatus(${item.id}, this.value)" class="bg-black border border-white/20 rounded-xl p-2 text-white">
+                            <option value="active" ${item.status === 'active' ? 'selected' : ''}>Aktif (Tersedia)</option>
+                            <option value="rented" ${item.status === 'rented' ? 'selected' : ''}>Disewa</option>
+                            <option value="inactive" ${item.status === 'inactive' ? 'selected' : ''}>Nonaktif</option>
+                        </select>
+                        <button onclick="deleteSpot(${item.id})" class="text-red-400 hover:text-red-300 p-1">
+                            <i data-lucide="trash-2" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+
+            // Render Portofolio List & Controls
+            const pList = document.getElementById('portfolioInputsList');
+            pList.innerHTML = portfolioItems.map(p => `
+                <div class="p-4 bg-black/40 rounded-2xl border border-white/10 space-y-3">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <span class="font-bold text-white block text-sm">${p.title}</span>
+                            <span class="text-gray-400 text-xs">${p.location} (${p.category.toUpperCase()})</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <select onchange="updatePortfolioStatus(${p.id}, this.value)" class="bg-black border border-white/20 rounded-xl p-2 text-white">
+                                <option value="active" ${p.status === 'active' ? 'selected' : ''}>Aktif (Tampil)</option>
+                                <option value="inactive" ${p.status === 'inactive' ? 'selected' : ''}>Nonaktif</option>
+                            </select>
+                            <button onclick="deletePortfolioItem(${p.id})" class="text-red-400 hover:text-red-300 p-1">
+                                <i data-lucide="trash-2" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="text-gray-400 mb-1 block">URL Gambar</label>
+                        <input type="text" id="p_img_${p.id}" value="${p.img}" class="w-full bg-black/60 border border-white/20 rounded-xl p-2.5 text-white">
+                    </div>
+                </div>
+            `).join('');
+
+            lucide.createIcons();
+        }
+
+        function updateStatus(id, newStatus) {
+            const spot = mediaSpots.find(s => s.id === id);
+            if (spot) {
+                spot.status = newStatus;
+                saveToStorage();
+                renderAdminList();
+            }
+        }
+
+        function deleteSpot(id) {
+            if(confirm('Hapus titik media ini?')) {
+                mediaSpots = mediaSpots.filter(s => s.id !== id);
+                saveToStorage();
+                renderAdminList();
+            }
+        }
+
+        function addNewMediaSpot() {
+            const title = document.getElementById('newMediaTitle').value;
+            const address = document.getElementById('newMediaAddress').value;
+            const city = document.getElementById('newMediaCitySearch').value;
+            const cityKey = document.getElementById('newMediaCity').value || city.toLowerCase().replace(/\s+/g, '');
+            const type = document.getElementById('newMediaType').value;
+            const img = document.getElementById('newMediaImg').value || "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=800&auto=format&fit=crop";
+
+            if (!title || !address || !city) {
+                alert('Mohon lengkapi Nama Jenis, Kota, dan Alamat titik.');
+                return;
+            }
+
+            mediaSpots.push({ id: Date.now(), title, address: `${address}, ${city}`, type, city: cityKey, img, status: "active" });
+            saveToStorage();
+
+            document.getElementById('newMediaTitle').value = '';
+            document.getElementById('newMediaAddress').value = '';
+            document.getElementById('newMediaCitySearch').value = '';
+            renderAdminList();
+            alert('Titik media berhasil ditambahkan!');
+        }
+
+        /* PORTOFOLIO FUNCTIONS */
+        function addNewPortfolioItem() {
+            const title = document.getElementById('newPortTitle').value;
+            const location = document.getElementById('newPortLocation').value;
+            const category = document.getElementById('newPortCategory').value;
+            const img = document.getElementById('newPortImg').value || "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=800&auto=format&fit=crop";
+
+            if (!title || !location) {
+                alert('Mohon lengkapi Judul Proyek dan Lokasi Portofolio.');
+                return;
+            }
+
+            portfolioItems.push({ id: Date.now(), title, location, category, img, status: "active" });
+            saveToStorage();
+
+            document.getElementById('newPortTitle').value = '';
+            document.getElementById('newPortLocation').value = '';
+            document.getElementById('newPortImg').value = '';
+            renderAdminList();
+            alert('Rekam jejak/Portofolio baru berhasil ditambahkan!');
+        }
+
+        function updatePortfolioStatus(id, newStatus) {
+            const item = portfolioItems.find(p => p.id === id);
+            if (item) {
+                item.status = newStatus;
+                saveToStorage();
+                renderAdminList();
+            }
+        }
+
+        function deletePortfolioItem(id) {
+            if(confirm('Hapus item rekam jejak / portofolio ini?')) {
+                portfolioItems = portfolioItems.filter(p => p.id !== id);
+                saveToStorage();
+                renderAdminList();
+            }
+        }
+
+        function switchTab(tab) {
+            document.getElementById('tabMedia').classList.toggle('hidden', tab !== 'media');
+            document.getElementById('tabImages').classList.toggle('hidden', tab !== 'images');
+            document.getElementById('tabPortfolio').classList.toggle('hidden', tab !== 'portfolio');
+
+            document.getElementById('tabNavMedia').className = tab === 'media' ? "pb-3 border-b-2 border-blue-500 text-white whitespace-nowrap" : "pb-3 border-b-2 border-transparent text-gray-400 hover:text-white whitespace-nowrap";
+            document.getElementById('tabNavImages').className = tab === 'images' ? "pb-3 border-b-2 border-blue-500 text-white whitespace-nowrap" : "pb-3 border-b-2 border-transparent text-gray-400 hover:text-white whitespace-nowrap";
+            document.getElementById('tabNavPortfolio').className = tab === 'portfolio' ? "pb-3 border-b-2 border-blue-500 text-white whitespace-nowrap" : "pb-3 border-b-2 border-transparent text-gray-400 hover:text-white whitespace-nowrap";
+        }
+
+        function saveWebsiteImages() {
+            const heroImgs = [
+                document.getElementById('inputHero1').value,
+                document.getElementById('inputHero2').value,
+                document.getElementById('inputHero3').value,
+                document.getElementById('inputHero4').value
+            ];
+            localStorage.setItem('murba_hero_images', JSON.stringify(heroImgs));
+            alert('Gambar Hero Slider & Layanan Utama berhasil disimpan!');
+        }
+
+        function savePortfolioImages() {
+            portfolioItems.forEach(p => {
+                const el = document.getElementById(`p_img_${p.id}`);
+                if (el) p.img = el.value;
+            });
+            saveToStorage();
+            alert('Gambar Portofolio (Rekam Jejak) berhasil diperbarui!');
+        }
+
+        renderAdminList();
+    </script>
+</body>
+</html>
